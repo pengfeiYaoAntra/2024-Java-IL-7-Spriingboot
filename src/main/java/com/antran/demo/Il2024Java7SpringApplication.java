@@ -1,9 +1,11 @@
 package com.antran.demo;
 
+import com.antran.demo.Service.JavaDeveloperService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 
 /**
@@ -67,23 +69,71 @@ import org.springframework.context.ConfigurableApplicationContext;
  *
  *
  *
+ * filed injection
+ *  class customerService{
+ * 		@Autowired
+ * 		private CustomerRepository customerRepository
+ *
+ *  }
+ *  why do we need it: easy to use ot setup
+ *  disadvantages:
+ *  	there is not final keyword. other threads can change it
+ *  	private -> not easy to use unit test
+ *
+ * constructor injection!!!!!!
+ * 	passing beans/dependencies as parameter to the class constructor
+ *  private final CustomerService customerService;
+ *     @Autowired
+ *     public CustomerController(CustomerService customerService){
+ *         this.customerService = customerService;
+ *     }
+ *     advantages:
+ *     	immutability: final keyword is used
+ *     	easy to test, since we pass beans/dependences into the constructor
+ *     	dis:
+ *     		makes code more complex
  *
  *
+ * setter injection
+ *		private  CustomerService customerService;
+ *     @Autowired
+ *     public CustomerController(CustomerService customerService){
+ *         this.customerService = customerService;
+ *     }
+ * 		advantage
+ * 			more flexibility
+ *
+ * 		dis
+ * 			not immutability
+ *
+ *
+ *
+ *
+ * spring aop
+ *
+ * aspect: cross-cutting concern
+ *
+ * join point is a specific point during the execution of you programming
+ *
+ * pointcut: it is a predicate that matches one or more join points in your application
+ *
+ *
+ * advice: is an action can be taken by an aspect at a particular join point
+ * 		 before, after, afterReturning, afterthrowing , around
  *
  *
  *
  *
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication
+@EnableAspectJAutoProxy
 public class Il2024Java7SpringApplication {
 
 	public static void main(String[] args) {
 
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Il2024Java7SpringApplication.class, args);
 		String[] names = configurableApplicationContext.getBeanDefinitionNames();
-		for(String name : names){
-			System.out.println(name);
-		}
+
 
 	}
 
